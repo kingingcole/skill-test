@@ -106,6 +106,19 @@ exports.getPriceSchema = [
         },
 ];
 
+exports.getPriceSchema = [
+    body('symbol')
+        .exists()
+        .withMessage('Token symbol is required'),
+        function(req,res,next) { 
+            var errorValidation = validationResult(req);
+            if ( errorValidation.errors.length !== 0 ) {
+                return res.send({response:false, message:errorValidation.errors[0].msg})
+            }
+            next()
+        },
+];
+
 exports.getAssetsSchema = [
     body('publicKey')
         .exists()
